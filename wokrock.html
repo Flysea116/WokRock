@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wok&Roll — 单文件原型</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>html{scroll-behavior:smooth}</style>
+</head>
+<body class="min-h-screen bg-zinc-50 text-zinc-900">
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-zinc-200">
+    <div class="max-w-6xl mx-auto px-6 md:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="inline-block w-5 h-5 rounded-full bg-emerald-500"></span>
+        <span class="font-semibold tracking-tight text-lg">Wok&Roll</span>
+        <span id="tagline" class="hidden md:inline-block text-zinc-400">— 清新·健康·高端·有食欲</span>
+      </div>
+      <nav class="flex items-center gap-5 text-sm">
+        <a href="#party" class="text-zinc-500 hover:text-zinc-900" id="nav-party">聚会订餐</a>
+        <a href="#corporate" class="text-zinc-500 hover:text-zinc-900" id="nav-corp">团餐</a>
+        <a href="#delivery" class="text-zinc-500 hover:text-zinc-900" id="nav-delivery">外卖</a>
+        <a href="#ready" class="text-zinc-500 hover:text-zinc-900" id="nav-ready">预制特色菜</a>
+        <a href="#about" class="text-zinc-500 hover:text-zinc-900" id="nav-about">关于我们</a>
+        <select id="lang" class="bg-white border border-zinc-300 rounded-md px-2 py-1">
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+          <option value="zh" selected>中文</option>
+        </select>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-6 md:px-8 py-12 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Wok&Roll: <span id="hero-tag">清新·健康·高端·有食欲</span></h1>
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm">
+          <span class="rounded-full bg-zinc-100 border border-zinc-200 px-4 py-2">EU aesthetics · Clean & premium</span>
+          <span class="rounded-full bg-zinc-100 border border-zinc-200 px-4 py-2">Mobile-first · Fast ordering</span>
+        </div>
+        <div class="mt-8 flex gap-3">
+          <a href="#party" class="rounded-2xl px-5 py-3 text-sm font-medium bg-zinc-900 text-white hover:bg-black" id="cta-primary">立即定制聚会餐</a>
+          <button class="rounded-2xl px-5 py-3 text-sm font-medium border border-zinc-300 hover:bg-zinc-50" id="cta-secondary">下载菜单 PDF</button>
+        </div>
+      </div>
+      <div class="rounded-3xl overflow-hidden shadow-lg">
+        <img src="https://picsum.photos/seed/herofood/1600/1200" alt="Hero food" class="w-full h-full object-cover"/>
+      </div>
+    </section>
+
+    <!-- Party Catering -->
+    <section id="party" class="max-w-6xl mx-auto px-6 md:px-8 py-12">
+      <h2 class="text-2xl font-semibold mb-6" id="party-title">聚会订餐</h2>
+      <!-- Auto bundle -->
+      <div class="rounded-3xl border border-zinc-200 p-5 bg-white mb-6">
+        <div class="grid md:grid-cols-3 gap-6 items-end">
+          <div>
+            <label class="block text-sm text-zinc-600 mb-1" id="label-people">人数</label>
+            <input id="people" type="range" min="2" max="60" value="8" class="w-full"/>
+            <div class="text-lg font-medium mt-1"><span id="people-val">8</span></div>
+          </div>
+          <div>
+            <label class="block text-sm text-zinc-600 mb-1" id="label-budget">人均预算 (€)</label>
+            <input id="budget" type="range" min="10" max="50" value="18" class="w-full"/>
+            <div class="text-lg font-medium mt-1">€ <span id="budget-val">18</span></div>
+          </div>
+          <div class="flex items-end gap-3">
+            <button id="autobundle" class="rounded-xl bg-zinc-900 text-white px-4 py-2 text-sm font-medium">智能配比套餐</button>
+            <span class="text-sm text-zinc-500" id="label-or">或</span>
+            <span class="text-sm text-zinc-500" id="label-build">自选搭配 ↓</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu & Cart -->
+      <div class="grid lg:grid-cols-3 gap-8 items-start">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="rounded-3xl border border-zinc-200 p-5 bg-white">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="font-medium" id="fav-title">人气菜品</h4>
+              <div class="flex gap-2 text-sm">
+                <button data-filter="all" class="px-3 py-1.5 rounded-full border border-zinc-300 bg-zinc-900 text-white" id="filter-all">全部</button>
+                <button data-filter="vegan" class="px-3 py-1.5 rounded-full border border-zinc-300" id="filter-vegan">纯素</button>
+                <button data-filter="veggie" class="px-3 py-1.5 rounded-full border border-zinc-300" id="filter-veggie">素食</button>
+                <button data-filter="spicy" class="px-3 py-1.5 rounded-full border border-zinc-300" id="filter-spicy">微辣/辣</button>
+              </div>
+            </div>
+            <div id="menu" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-zinc-200 p-5 bg-white" id="cart-wrap">
+          <h4 class="font-medium mb-3" id="cart-title">你的聚会套餐</h4>
+          <div id="cart-empty" class="text-sm text-zinc-500">先从下方加入菜品吧</div>
+          <div id="cart-list" class="hidden space-y-3"></div>
+          <div id="cart-summary" class="hidden pt-2 border-t mt-3">
+            <div class="flex items-center justify-between"><span id="total-label">总价</span><span class="text-lg font-semibold">€ <span id="total-val">0.00</span></span></div>
+            <div class="flex items-center justify-between text-sm text-zinc-600 mt-1"><span id="per-label">人均</span><span>€ <span id="per-val">0.00</span></span></div>
+            <button class="w-full mt-3 rounded-xl bg-zinc-900 text-white px-4 py-2 text-sm font-medium" id="checkout">提交意向</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Corporate / Delivery / Ready / About (简版占位) -->
+    <section id="corporate" class="max-w-6xl mx-auto px-6 md:px-8 py-12">
+      <div class="rounded-3xl border p-6 bg-white border-zinc-200">
+        <h2 class="text-2xl font-semibold" id="corp-title">团餐</h2>
+        <p class="mt-3 text-zinc-600" id="corp-blurb">为会议、培训与企业活动提供标准化团餐方案，支持开票与定制包装。</p>
+      </div>
+    </section>
+
+    <section id="delivery" class="max-w-6xl mx-auto px-6 md:px-8 py-12">
+      <div class="rounded-3xl border p-6 bg-white border-zinc-200">
+        <h2 class="text-2xl font-semibold" id="delivery-title">外卖</h2>
+        <p class="mt-3 text-zinc-600" id="delivery-blurb">覆盖市区主要商圈，30-45分钟送达，高峰期增派运力保障时效。</p>
+      </div>
+    </section>
+
+    <section id="ready" class="max-w-6xl mx-auto px-6 md:px-8 py-12">
+      <div class="rounded-3xl border p-6 bg-white border-zinc-200">
+        <h2 class="text-2xl font-semibold" id="ready-title">预制特色菜</h2>
+        <p class="mt-3 text-zinc-600" id="ready-blurb">精选预制菜，家用加热10分钟即食；适合小聚/露营/夜宵。</p>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          <img class="rounded-2xl border" src="https://picsum.photos/seed/tofu/800/600" alt="tofu"/>
+          <img class="rounded-2xl border" src="https://picsum.photos/seed/kungpao/800/600" alt="kungpao"/>
+          <img class="rounded-2xl border" src="https://picsum.photos/seed/shrimp/800/600" alt="shrimp"/>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="max-w-6xl mx-auto px-6 md:px-8 py-12">
+      <div class="rounded-3xl border p-6 bg-white border-zinc-200">
+        <h2 class="text-2xl font-semibold" id="about-title">关于我们</h2>
+        <p class="mt-3 text-zinc-600" id="about-blurb">我们坚持少油少盐、优质蛋白与当季蔬菜，亚洲风味的现代演绎。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-200 py-10 mt-8">
+    <div class="max-w-6xl mx-auto px-6 md:px-8 text-sm text-zinc-500 flex items-center justify-between">
+      <div>© <span id="year"></span> Wok&Roll</div>
+      <div class="flex items-center gap-6"><a href="#">Privacy</a><a href="#">Accessibility</a><a href="#">Impressum</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // 多语言字典
+    const I18N = {
+      zh: { tag:'清新·健康·高端·有食欲', nav:{party:'聚会订餐',corporate:'团餐',delivery:'外卖',ready:'预制特色菜',about:'关于我们'}, cta1:'立即定制聚会餐', cta2:'下载菜单 PDF', people:'人数', budget:'人均预算 (€)', autobundle:'智能配比套餐', or:'或', build:'自选搭配', fav:'人气菜品', cart:'你的聚会套餐', total:'总价', per:'人均', empty:'先从下方加入菜品吧', corp:'为会议、培训与企业活动提供标准化团餐方案，支持开票与定制包装。', delivery:'覆盖市区主要商圈，30-45分钟送达，高峰期增派运力保障时效。', ready:'精选预制菜，家用加热10分钟即食；适合小聚/露营/夜宵。', about:'我们坚持少油少盐、优质蛋白与当季蔬菜，亚洲风味的现代演绎。', filters:{all:'全部', vegan:'纯素', veggie:'素食', spicy:'微辣/辣'} },
+      en: { tag:'Fresh · Healthy · Elevated · Craveable', nav:{party:'Party Catering',corporate:'Group Meals',delivery:'Delivery',ready:'Ready-Made Specials',about:'About'}, cta1:'Plan your party menu', cta2:'Download menu PDF', people:'Guests', budget:'Budget per guest (€)', autobundle:'Auto-bundle', or:'or', build:'Build your own', fav:'Popular picks', cart:'Your party set', total:'Total', per:'Per guest', empty:'Add items below to start', corp:'Reliable office catering for meetings, trainings and events. Invoicing available.', delivery:'Citywide coverage in 30–45 minutes. Extra riders during peak hours.', ready:'Signature ready-made dishes—heat at home in ~10 minutes.', about:'We balance lean proteins with seasonal vegetables—modern Asian flavours.', filters:{all:'All', vegan:'Vegan', veggie:'Vegetarian', spicy:'Spicy'} },
+      de: { tag:'Frisch · Gesund · Hochwertig · Appetitlich', nav:{party:'Party-Bestellung',corporate:'Gruppenmenüs',delivery:'Lieferung',ready:'Fertiggerichte',about:'Über uns'}, cta1:'Party-Menü planen', cta2:'Speisekarte als PDF', people:'Personen', budget:'Budget pro Person (€)', autobundle:'Automatisches Paket', or:'oder', build:'Selbst zusammenstellen', fav:'Beliebte Gerichte', cart:'Dein Party-Set', total:'Gesamt', per:'Pro Person', empty:'Füge unten Gerichte hinzu', corp:'Zuverlässiges Office-Catering für Meetings und Events. Rechnung möglich.', delivery:'Stadtweit in 30–45 Minuten. Mehr Fahrer zu Stoßzeiten.', ready:'Signature-Fertiggerichte – zuhause in ~10 Minuten heiß.', about:'Mageres Protein & saisonales Gemüse – moderne asiatische Küche.', filters:{all:'Alle', vegan:'Vegan', veggie:'Vegetarisch', spicy:'Scharf'} }
+    };
+
+    // 菜单数据
+    const MENU = [
+      { id:'edamame', name:{zh:'海盐毛豆', en:'Sea Salt Edamame', de:'Edamame mit Meersalz'}, price:4.5, tags:['vegan'], type:'starter' },
+      { id:'gyoza', name:{zh:'鸡肉锅贴', en:'Chicken Gyoza', de:'Hähnchen-Gyoza'}, price:6.9, tags:[], type:'starter' },
+      { id:'springroll', name:{zh:'蔬菜春卷', en:'Veggie Spring Rolls', de:'Gemüse-Frühlingsrollen'}, price:5.9, tags:['veggie'], type:'starter' },
+      { id:'salmonpoke', name:{zh:'三文鱼拌饭', en:'Salmon Poke Bowl', de:'Lachs-Poke-Bowl'}, price:12.9, tags:[], type:'main' },
+      { id:'tofubowl', name:{zh:'麻辣豆腐碗', en:'Spicy Tofu Bowl', de:'Scharfe Tofu-Bowl'}, price:10.9, tags:['vegan','spicy'], type:'main' },
+      { id:'beefnoodle', name:{zh:'黑椒牛肉面', en:'Black Pepper Beef Noodles', de:'Schwarzer Pfeffer Rind-Nudeln'}, price:13.5, tags:[], type:'main' },
+      { id:'greenveg', name:{zh:'清炒时蔬', en:'Seasonal Greens', de:'Saisonales Gemüse'}, price:6.5, tags:['vegan'], type:'side' },
+      { id:'friedrice', name:{zh:'蛋炒饭', en:'Egg Fried Rice', de:'Gebratener Reis mit Ei'}, price:7.5, tags:['veggie'], type:'side' },
+      { id:'bao', name:{zh:'叉烧包', en:'Char Siu Bao', de:'Char Siu Bao'}, price:4.2, tags:[], type:'starter' },
+      { id:'wokveg', name:{zh:'宫保鸡丁', en:'Kung Pao Chicken', de:'Kung Pao Huhn'}, price:12.2, tags:['spicy'], type:'main' },
+      { id:'lemongrass', name:{zh:'香茅虾', en:'Lemongrass Prawns', de:'Zitronengras-Garnelen'}, price:14.4, tags:[], type:'main' },
+      { id:'icedtea', name:{zh:'乌龙冰茶', en:'Oolong Iced Tea', de:'Oolong-Eistee'}, price:3.8, tags:[], type:'drink' },
+      { id:'sparkling', name:{zh:'气泡水', en:'Sparkling Water', de:'Sprudelwasser'}, price:2.9, tags:['vegan'], type:'drink' },
+    ];
+
+    const IMAGES = id => `https://picsum.photos/seed/${id}/800/600`;
+
+    // 状态
+    const state = { lang:'zh', filter:'all', cart:{} };
+
+    // 节点
+    const $ = s => document.querySelector(s);
+    const menuEl = $('#menu');
+    const cartEmpty = $('#cart-empty');
+    const cartList = $('#cart-list');
+    const cartSummary = $('#cart-summary');
+
+    function setLang(lang){
+      state.lang = lang;
+      const t = I18N[lang];
+      $('#tagline').textContent = '— ' + t.tag;
+      $('#hero-tag').textContent = t.tag;
+      $('#nav-party').textContent = t.nav.party;
+      $('#nav-corp').textContent = t.nav.corporate;
+      $('#nav-delivery').textContent = t.nav.delivery;
+      $('#nav-ready').textContent = t.nav.ready;
+      $('#nav-about').textContent = t.nav.about;
+      $('#cta-primary').textContent = t.cta1;
+      $('#cta-secondary').textContent = t.cta2;
+      $('#party-title').textContent = t.nav.party;
+      $('#label-people').textContent = t.people;
+      $('#label-budget').textContent = t.budget;
+      $('#autobundle').textContent = t.autobundle;
+      $('#label-or').textContent = t.or;
+      $('#label-build').textContent = t.build;
+      $('#fav-title').textContent = t.fav;
+      $('#filter-all').textContent = t.filters.all;
+      $('#filter-vegan').textContent = t.filters.vegan;
+      $('#filter-veggie').textContent = t.filters.veggie;
+      $('#filter-spicy').textContent = t.filters.spicy;
+      $('#cart-title').textContent = t.cart;
+      $('#total-label').textContent = t.total;
+      $('#per-label').textContent = t.per;
+      $('#cart-empty').textContent = t.empty;
+      $('#corp-title').textContent = t.nav.corporate;
+      $('#corp-blurb').textContent = t.corp;
+      $('#delivery-title').textContent = t.nav.delivery;
+      $('#delivery-blurb').textContent = t.delivery;
+      $('#ready-title').textContent = t.nav.ready;
+      $('#ready-blurb').textContent = t.ready;
+      $('#about-title').textContent = t.nav.about;
+      $('#about-blurb').textContent = t.about;
+      renderMenu();
+      renderCart();
+    }
+
+    function renderMenu(){
+      const list = MENU.filter(m => state.filter==='all' || m.tags.includes(state.filter));
+      menuEl.innerHTML = list.map(m => `
+        <div class="border border-zinc-200 rounded-2xl p-4 bg-white flex flex-col">
+          <div class="aspect-video rounded-xl overflow-hidden mb-3">
+            <img src="${IMAGES(m.id)}" alt="${m.name[state.lang]}" class="w-full h-full object-cover"/>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">${m.name[state.lang]}</div>
+            <div class="text-sm text-zinc-500 mt-1">€ ${m.price.toFixed(2)}</div>
+            <div class="mt-1 flex gap-2 text-[11px] text-zinc-500">${m.tags.map(t=>`<span class='px-2 py-0.5 rounded-full bg-zinc-100 border'>${t}</span>`).join('')}</div>
+          </div>
+          <button data-add="${m.id}" class="mt-3 rounded-xl border border-zinc-300 hover:bg-zinc-50 px-3 py-2 text-sm">+ Add</button>
+        </div>
+      `).join('');
+    }
+
+    function renderCart(){
+      const entries = Object.entries(state.cart);
+      if(entries.length===0){
+        cartEmpty.classList.remove('hidden');
+        cartList.classList.add('hidden');
+        cartSummary.classList.add('hidden');
+        return;
+      }
+      cartEmpty.classList.add('hidden');
+      cartList.classList.remove('hidden');
+      cartSummary.classList.remove('hidden');
+
+      const items = entries.map(([id, qty]) => ({ dish: MENU.find(m=>m.id===id), qty }));
+      cartList.innerHTML = items.map(({dish, qty})=>`
+        <div class="flex items-center justify-between border-b pb-3">
+          <div>
+            <div class="font-medium">${dish.name[state.lang]}</div>
+            <div class="text-sm text-zinc-500">€ ${dish.price.toFixed(2)} × ${qty}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button data-dec="${dish.id}" class="rounded-lg border px-2 py-1">−</button>
+            <span class="w-6 text-center">${qty}</span>
+            <button data-inc="${dish.id}" class="rounded-lg border px-2 py-1">＋</button>
+          </div>
+        </div>
+      `).join('');
+
+      const subtotal = items.reduce((s,i)=>s+i.dish.price*i.qty,0);
+      $('#total-val').textContent = subtotal.toFixed(2);
+      const totalQty = items.reduce((s,i)=>s+i.qty,0);
+      $('#per-val').textContent = (subtotal/Math.max(1,totalQty*0.6)).toFixed(2);
+    }
+
+    // 事件
+    document.addEventListener('click', (e)=>{
+      const addId = e.target.getAttribute('data-add');
+      if(addId){ state.cart[addId] = (state.cart[addId]||0)+1; renderCart(); return; }
+      const incId = e.target.getAttribute('data-inc');
+      if(incId){ state.cart[incId] = (state.cart[incId]||0)+1; renderCart(); return; }
+      const decId = e.target.getAttribute('data-dec');
+      if(decId){ state.cart[decId] = Math.max(0,(state.cart[decId]||0)-1); if(state.cart[decId]===0) delete state.cart[decId]; renderCart(); return; }
+      const filter = e.target.getAttribute('data-filter');
+      if(filter){ state.filter = filter; document.querySelectorAll('[data-filter]').forEach(b=>b.classList.remove('bg-zinc-900','text-white')); e.target.classList.add('bg-zinc-900','text-white'); renderMenu(); return; }
+    });
+
+    $('#people').addEventListener('input', e=>{ $('#people-val').textContent = e.target.value; });
+    $('#budget').addEventListener('input', e=>{ $('#budget-val').textContent = e.target.value; });
+
+    $('#autobundle').addEventListener('click', ()=>{
+      const people = parseInt($('#people').value, 10);
+      const budget = parseInt($('#budget').value, 10);
+      const totalBudget = people * budget;
+      // 简单启发式配比
+      const target = {starter: Math.max(2, Math.round((people/6)*2)), main: Math.max(3, Math.round((people/6)*3)), side: Math.max(2, Math.round((people/6)*2)), drink: Math.max(1, Math.round((people/6)*1))};
+      const byType = type => MENU.filter(m=>state.filter==='all'||m.tags.includes(state.filter)).filter(m=>m.type===type).sort((a,b)=>a.price-b.price);
+      let picks = [], spend = 0;
+      ['starter','main','side','drink'].forEach(type=>{ const list = byType(type); for(let i=0;i<target[type]&&list[i];i++){ picks.push(list[i]); spend += list[i].price; } });
+      const sortedAll = MENU.filter(m=>state.filter==='all'||m.tags.includes(state.filter)).slice().sort((a,b)=>a.price-b.price);
+      let i=0; while(i<sortedAll.length && spend + sortedAll[i].price <= totalBudget*0.95){ picks.push(sortedAll[i]); spend += sortedAll[i].price; i++; }
+      picks.forEach(p=>{ state.cart[p.id] = (state.cart[p.id]||0) + 1; });
+      renderCart();
+      window.location.hash = '#cart-wrap';
+    });
+
+    $('#lang').addEventListener('change', e=> setLang(e.target.value));
+
+    // 初始化
+    $('#year').textContent = new Date().getFullYear();
+    setLang('zh');
+    renderMenu();
+    renderCart();
+  </script>
+</body>
+</html>
